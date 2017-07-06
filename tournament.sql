@@ -14,7 +14,7 @@ CREATE DATABASE tournament;
 --
 create table Players(id serial primary key, name text);
 --
-create table Matches(winner integer, loser integer, match id integer primary key);
+create table Matches(winner integer references Players (id), loser integer references Players (id), match id serial primary key);
 --
 create view standings as
     select players.id, players.name, COALESCE(sum(matches.winner),0) AS wins, count(matches.winner)
