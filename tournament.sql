@@ -17,7 +17,7 @@ create table Players(id serial primary key, name text);
 create table Matches(winner integer, loser integer, match id integer primary key);
 --
 create view standings as
-    select players.id, players.name, COALESCE(sum(matches.result),0) AS wins, count(matches.result)
+    select players.id, players.name, COALESCE(sum(matches.winner),0) AS wins, count(matches.winner)
     FROM players LEFT JOIN matches
     ON players.id = matches.id
     GROUP BY players.id
