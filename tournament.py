@@ -73,11 +73,14 @@ def playerStandings():
     """
     db = psycopg2.connect("dbname=tournament")
     c = db.cursor()
-    c.execute("select players.id, players.name, COALESCE(sum(matches.result),0) AS wins, count(matches.result) FROM players LEFT JOIN matches ON players.id = matches.id GROUP BY players.id ORDER BY wins DESC;")
+    c.execute("""select players.id, players.name, COALESCE(sum(matches.result),
+    0) AS wins, count(matches.result) FROM players LEFT JOIN matches ON
+    players.id = matches.id GROUP BY players.id ORDER BY wins DESC;""")
     results = c.fetchall()
-    return results
     db.commit()
     db.close()
+    return results
+
 
 
 def reportMatch(winner, loser):
